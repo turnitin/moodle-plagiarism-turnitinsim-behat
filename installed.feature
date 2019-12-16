@@ -9,12 +9,11 @@ Feature: Installation succeeds
     And I navigate to "Advanced features" in site administration
     And I set the field "Enable plagiarism plugins" to "1"
     And I press "Save changes"
-    And I navigate to "Plugins > Plagiarism > TurnitinSim plagiarism plugin" in site administration
-    And I configure TurnitinSim credentials
+    And I navigate to "Plugins > Plagiarism > Turnitin Similarity plagiarism plugin" in site administration
+    And I configure Turnitin Similarity credentials
     And I set the following fields to these values:
-      | Enable TurnitinSim for Assign | 1 |
+      | Enable Turnitin Similarity for Assign | 1 |
     And I press "Save changes"
-    And I navigate to "Plugins overview" node in "Site administration > Plugins"
     Then the following should exist in the "plugins-control-panel" table:
-      | Plugin name      |
-      | plagiarism_turnitinsim |
+      | Plugin name         |
+      | plagiarism_turnitin |

@@ -19,14 +19,14 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     And I navigate to "Advanced features" in site administration
     And I set the field "Enable plagiarism plugins" to "1"
     And I press "Save changes"
-    And I navigate to "Plugins > Plagiarism > TurnitinSim plagiarism plugin" in site administration
-    And I configure TurnitinSim credentials
+    And I navigate to "Plugins > Plagiarism > Turnitin Similarity plagiarism plugin" in site administration
+    And I configure Turnitin Similarity credentials
     And I set the following fields to these values:
-      | Enable TurnitinSim for Assign       | 1 |
+      | Enable Turnitin Similarity for Assign       | 1 |
       | Hide Student's Identity from Turnitin | 1 |
     And I press "Save changes"
     # Check that features enabled are displayed.
-    Then I should see "TurnitinSim features"
+    Then I should see "Turnitin Similarity features"
     And I should see "Repositories checked against"
     # Create Assignment.
     And I am on "Course 1" course homepage with editing mode on

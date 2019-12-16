@@ -29,7 +29,7 @@ require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 class behat_plagiarism_turnitinsim extends behat_base {
 
     /**
-     * @Given I configure TurnitinSim credentials
+     * @Given I configure Turnitin Similarity credentials
      */
     public function i_configure_turnitinsim_credentials() {
         $apikey = getenv('TII_APIKEY');
