@@ -44,7 +44,7 @@ Feature: Group assignment submissions
     And I follow "Test assignment name"
     Then I should see "Grading summary"
 
-  @javascript
+  @javascript @_file_upload
   Scenario: Confirm that all students in a group can access the Cloud Viewer even if they didn't submit.
     Given I log out
     # Student submits.
@@ -71,6 +71,8 @@ Feature: Group assignment submissions
     And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
     # Admin runs scheduled task to request originality report score.
     And I wait "20" seconds
+    And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
+    And I wait "30" seconds
     And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
     And I am on "Course 1" course homepage
     And I follow "Test assignment name"

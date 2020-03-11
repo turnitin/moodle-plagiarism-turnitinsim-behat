@@ -1,4 +1,4 @@
-@plugin @plagiarism @plagiarism_turnitinsim @plagiarism_turnitinsim_assignment
+@plugin @plagiarism @plagiarism_turnitinsim @plagiarism_turnitinsim_assignment @turnitinsim_smoke
 Feature: Plagiarism plugin works with a Moodle Assignment
   In order to allow students to send assignment submissions to Turnitin
   As a user
@@ -39,7 +39,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     And I follow "Test assignment name"
     Then I should see "Grading summary"
 
-  @javascript
+  @javascript @_file_upload
   Scenario: A student can accept the EULA and submit to Turnitin, an Originality Report is retrieved and the Cloud Viewer can be launched.
     Given I log out
     # Student submits.
@@ -74,6 +74,8 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     # Admin runs scheduled task to request originality report score.
     And I wait "20" seconds
     And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
+    And I wait "30" seconds
+    And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
     # Instructor should be able to view Cloud Viewer and be presented with the EULA.
     And I log out
     And I log in as "instructor1"
@@ -98,7 +100,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     Then I should see "testfile.txt"
     And I should see "student1 student1"
 
-  @javascript
+  @javascript @_file_upload
   Scenario: A student can decline the EULA, their submission still processes in Moodle but is not sent to Turnitin
     Given I log out
     # Student submits.
@@ -121,39 +123,3 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     When I navigate to "View all submissions" in current page administration
     Then "student2 student2" row "File submissions" column of "generaltable" table should contain "Awaiting EULA"
 
-  @javascript
-  Scenario: An instructor can submit on behalf of multiple students, they are presented with the opportunity to accept the EULA and
-  the submissions are then sent to Turnitin
-    Given I am on "Course 1" course homepage
-    And I set the following system permissions of "Teacher" role:
-      | capability | permission |
-      | mod/assign:editothersubmission | Allow |
-    And I log out
-    # Instructor submits for student1.
-    And I log in as "instructor1"
-    And I am on "Course 1" course homepage
-    And I follow "Test assignment name"
-    And I navigate to "View all submissions" in current page administration
-    And I click on "Edit" "link" in the "student1 student1" "table_row"
-    And I choose "Edit submission" in the open action menu
-    And I click on "I accept the Turnitin EULA" "button"
-    And I upload "plagiarism/turnitinsim/tests/fixtures/testfile.txt" file to "File submissions" filemanager
-    And I press "Save changes"
-    When I navigate to "View all submissions" in current page administration
-    # Instructor submits for student2.
-    And I click on "Edit" "link" in the "student2 student2" "table_row"
-    And I choose "Edit submission" in the open action menu
-    And I upload "plagiarism/turnitinsim/tests/fixtures/testfile.txt" file to "File submissions" filemanager
-    And I press "Save changes"
-    When I navigate to "View all submissions" in current page administration
-    Then "student1 student1" row "File submissions" column of "generaltable" table should contain "Queued"
-    And "student2 student2" row "File submissions" column of "generaltable" table should contain "Queued"
-    And I log out
-    # Admin runs scheduled task to send submission to Turnitin.
-    And I log in as "admin"
-    And I run the scheduled task "plagiarism_turnitinsim\task\send_submissions"
-    And I am on "Course 1" course homepage
-    And I follow "Test assignment name"
-    And I navigate to "View all submissions" in current page administration
-    Then "student1 student1" row "File submissions" column of "generaltable" table should contain "Pending"
-    Then "student2 student2" row "File submissions" column of "generaltable" table should contain "Pending"

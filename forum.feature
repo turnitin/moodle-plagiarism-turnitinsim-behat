@@ -1,4 +1,4 @@
-@plugin @plagiarism @plagiarism_turnitinsim @plagiarism_turnitinsim_forum
+@plugin @plagiarism  @plagiarism_turnitinsim_forum
 Feature: Plagiarism plugin works with a Moodle forum
   In order to allow students to send forum posts to Turnitin
   As a user
@@ -34,22 +34,20 @@ Feature: Plagiarism plugin works with a Moodle forum
       | turnitinenabled               | 1                              |
       | accessoptions[accessstudents] | 1                              |
     And I follow "Test forum"
-    And I click on "Add a new discussion topic" "button"
-    And I click on "I accept the Turnitin EULA" "button"
+    And I follow "Add a new discussion topic"
     And I set the following fields to these values:
       | Subject | Forum post 1                                                                                                                |
       | Message | This is the body of the forum post that will be submitted to Turnitin. It will be sent to Turnitin for Originality Checking |
     And I press "Post to forum"
 
-  @javascript
+  @javascript @_file_upload
   Scenario: Add a post to a discussion with a file attached and retrieve the originality score
     Given I log out
     # Student creates a forum discussion and replies to original post.
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Test forum"
-    And I click on "Add a new discussion topic" "button"
-    And I click on "I accept the Turnitin EULA" "button"
+    And I follow "Add a new discussion topic"
     And I set the following fields to these values:
       | Subject | Forum post 2                                                                                                                |
       | Message | This is the body of the forum post that will be submitted to Turnitin. It will be sent to Turnitin for Originality Checking |
@@ -58,6 +56,8 @@ Feature: Plagiarism plugin works with a Moodle forum
       | Subject    | Reply with attachment                                                                                                       |
       | Message    | This is the body of the forum reply that will be submitted to Turnitin. It will be sent to Turnitin for Originality Checking |
       | Attachment | plagiarism/turnitinsim/tests/fixtures/testfile.txt                                                                                |
+    And I click on "I accept the Turnitin EULA" "button"
+    And I press "Post to forum"
     Then I should see "Reply with attachment"
     And I should see "testfile.txt"
     And I should see "Queued" in the "div.turnitinsim_links" "css_element"
@@ -67,7 +67,9 @@ Feature: Plagiarism plugin works with a Moodle forum
     And I run the scheduled task "plagiarism_turnitinsim\task\send_submissions"
     And I am on "Course 1" course homepage
     And I follow "Test forum"
-    And I follow "Forum post 1"
+    #####Problem need to check with David
+    And I follow "Forum post 2"
+    #And I wait "50" seconds
     Then I should see "Pending" in the "div.turnitinsim_links" "css_element"
     And I log out
     # Student can see post has been sent to Turnitin.
@@ -84,10 +86,13 @@ Feature: Plagiarism plugin works with a Moodle forum
     # Admin runs scheduled task to request originality report score.
     And I wait "20" seconds
     And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
+    And I wait "30" seconds
+    And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
     # Login as student and a score should be visible.
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Test forum"
     And I follow "Forum post 1"
+    And I wait "30" seconds
     Then I should see "%" in the "div.turnitinsim_links" "css_element"

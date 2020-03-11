@@ -36,7 +36,7 @@ Feature: Plagiarism plugin works with a Moodle Workshop
       | id_description__idx_1_editor | Aspect2 |
       | id_description__idx_2_editor |         |
 
-  @javascript
+  @javascript @_file_upload
   Scenario: A submission can be queued and sent to Turnitin
     And I change phase in workshop "Test workshop" to "Submission phase"
     And I log out
@@ -44,7 +44,7 @@ Feature: Plagiarism plugin works with a Moodle Workshop
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Test workshop"
-    And I press "Start preparing your submission"
+    And I press "Add submission"
     And I click on "I accept the Turnitin EULA" "button"
     And I set the following fields to these values:
       | Title              | Submission1                                                                                                                                            |
@@ -75,6 +75,8 @@ Feature: Plagiarism plugin works with a Moodle Workshop
     And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
     # Admin runs scheduled task to request originality report score.
     And I wait "20" seconds
+    And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
+    And I wait "30" seconds
     And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
     And I log out
     # Login as student and a score should be visible.

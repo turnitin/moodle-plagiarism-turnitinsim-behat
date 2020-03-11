@@ -4,7 +4,8 @@ Feature: Installation succeeds
   As a user
   I need the installation to work and plagiarism plugins to be enabled
 
-  Scenario:
+  @javascript
+  Scenario: Plugin is installed successfully
     Given I log in as "admin"
     And I navigate to "Advanced features" in site administration
     And I set the field "Enable plagiarism plugins" to "1"
