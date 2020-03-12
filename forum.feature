@@ -97,4 +97,5 @@ Feature: Plagiarism plugin works with a Moodle forum
     And I am on "Course 1" course homepage
     And I follow "Test forum"
     And I follow "Forum post 1"
+    ##### TO DO: fix the below assertion once  INT-14195 is fixed
     Then I should see "%"
