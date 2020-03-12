@@ -38,7 +38,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     And I follow "Test assignment name"
     Then I should see "Grading summary"
 
-  @javascript @_file_upload @runme
+  @javascript @_file_upload
   Scenario: A student can submit and if hide student's identity is set their name can not be seen in the Cloud Viewer.
     Given I log out
     # Student submits.

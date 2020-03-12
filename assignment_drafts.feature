@@ -1,4 +1,4 @@
-@plugin @plagiarism  @plagiarism_turnitinsim_assignment @plagiarism_turnitinsim_assignment_drafts
+@plugin @plagiarism  @plagiarism_turnitinsim @plagiarism_turnitinsim_assignment @plagiarism_turnitinsim_assignment_drafts
 Feature: Plagiarism plugin works with a Moodle Assignment
   In order to allow students to send assignment submissions to Turnitin
   As a user
@@ -53,31 +53,24 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     And I log out
     # Admin runs scheduled task to send submission to Turnitin.
     And I log in as "admin"
+    And I run the scheduled task "plagiarism_turnitinsim\task\send_submissions"
     And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     When I navigate to "View all submissions" in current page administration
-    Then "student1 student1" row "File submissions" column of "generaltable" table should contain "Queued"
-    And I run the scheduled task "plagiarism_turnitinsim\task\send_submissions"
+    Then "student1 student1" row "File submissions" column of "generaltable" table should contain "Pending"
     # Student can see post has been sent to Turnitin.
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Test assignment name"
-    And I press "Submit assignment"
-    And I press "Continue"
     Then I should see "Pending"
     And I log out
     # Admin runs scheduled task to request an originality report.
     And I log in as "admin"
-    And I am on "Course 1" course homepage
-    And I follow "Test assignment name"
-    When I navigate to "View all submissions" in current page administration
-    Then "student1 student1" row "File submissions" column of "generaltable" table should not contain "Queued"
-    And I run the scheduled task "plagiarism_turnitinsim\task\send_submissions"
-    # Admin runs scheduled task to request an originality report.
     And I wait "10" seconds
     And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
-    And I wait "30" seconds
+    # Admin runs scheduled task to request originality report score.
+    And I wait "20" seconds
     And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
     And I wait "30" seconds
     And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
@@ -87,7 +80,6 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     When I navigate to "View all submissions" in current page administration
-    #And I wait "50" seconds
     Then "student1 student1" row "File submissions" column of "generaltable" table should contain "%"
     And I click on ".or_score" "css_element"
     And I switch to "cvWindow" window
@@ -95,7 +87,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     Then I should see "testfile.txt"
     And I should see "student1 student1"
 
-  @javascript @_file_upload @plagiarism_turnitinsim
+  @javascript @_file_upload
   Scenario: A student can submit a draft and it is not sent to Turnitin until it is submitted.
     Given I navigate to "Edit settings" in current page administration
     And I set the following fields to these values:

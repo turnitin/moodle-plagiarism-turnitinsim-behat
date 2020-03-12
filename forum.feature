@@ -1,4 +1,4 @@
-@plugin @plagiarism  @plagiarism_turnitinsim_forum
+@plugin @plagiarism  @plagiarism_turnitinsim_forum @plagiarism_turnitinsim
 Feature: Plagiarism plugin works with a Moodle forum
   In order to allow students to send forum posts to Turnitin
   As a user
@@ -48,6 +48,7 @@ Feature: Plagiarism plugin works with a Moodle forum
     And I am on "Course 1" course homepage
     And I follow "Test forum"
     And I follow "Add a new discussion topic"
+    #And I click on "I accept the Turnitin EULA" "button"
     And I set the following fields to these values:
       | Subject | Forum post 2                                                                                                                |
       | Message | This is the body of the forum post that will be submitted to Turnitin. It will be sent to Turnitin for Originality Checking |
@@ -58,6 +59,7 @@ Feature: Plagiarism plugin works with a Moodle forum
       | Attachment | plagiarism/turnitinsim/tests/fixtures/testfile.txt                                                                                |
     And I click on "I accept the Turnitin EULA" "button"
     And I press "Post to forum"
+    And I wait "20" seconds
     Then I should see "Reply with attachment"
     And I should see "testfile.txt"
     And I should see "Queued" in the "div.turnitinsim_links" "css_element"
@@ -65,19 +67,20 @@ Feature: Plagiarism plugin works with a Moodle forum
     # Admin runs scheduled task to submit post and file to Turnitin.
     And I log in as "admin"
     And I run the scheduled task "plagiarism_turnitinsim\task\send_submissions"
+    And I wait "20" seconds
+    And I run the scheduled task "plagiarism_turnitinsim\task\send_submissions"
+    And I wait "10" seconds
     And I am on "Course 1" course homepage
     And I follow "Test forum"
-    #####Problem need to check with David
-    And I follow "Forum post 2"
-    #And I wait "50" seconds
-    Then I should see "Pending" in the "div.turnitinsim_links" "css_element"
+    And I follow "Forum post 1"
+    Then I should see "Pending"
     And I log out
     # Student can see post has been sent to Turnitin.
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Test forum"
     And I follow "Forum post 1"
-    Then I should see "Pending" in the "div.turnitinsim_links" "css_element"
+    Then I should see "Pending"
     And I log out
     # Admin runs scheduled task to request an originality report.
     And I log in as "admin"
@@ -94,5 +97,4 @@ Feature: Plagiarism plugin works with a Moodle forum
     And I am on "Course 1" course homepage
     And I follow "Test forum"
     And I follow "Forum post 1"
-    And I wait "30" seconds
-    Then I should see "%" in the "div.turnitinsim_links" "css_element"
+    Then I should see "%"
