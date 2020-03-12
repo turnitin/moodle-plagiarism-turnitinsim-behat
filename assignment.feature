@@ -1,4 +1,4 @@
-@plugin @plagiarism @plagiarism_turnitinsim @plagiarism_turnitinsim_assignment @turnitinsim_smoke
+@plugin @plagiarism @plagiarism_turnitinsim @plagiarism_turnitinsim_assignment @plagiarism_turnitinsim_smoke
 Feature: Plagiarism plugin works with a Moodle Assignment
   In order to allow students to send assignment submissions to Turnitin
   As a user
