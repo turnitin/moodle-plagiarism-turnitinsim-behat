@@ -1,4 +1,4 @@
-@plugin @plagiarism @plagiarism_turnitinsim @plagiarism_turnitinsim_assignment @plagiarism_turnitinsim_assignment_drafts
+@plugin @plagiarism  @plagiarism_turnitinsim @plagiarism_turnitinsim_assignment @plagiarism_turnitinsim_assignment_drafts
 Feature: Plagiarism plugin works with a Moodle Assignment
   In order to allow students to send assignment submissions to Turnitin
   As a user
@@ -37,7 +37,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     And I follow "Test assignment name"
     Then I should see "Grading summary"
 
-  @javascript
+  @javascript @_file_upload
   Scenario: A student can submit a draft and it is sent to Turnitin.
     Given I log out
     # Student submits.
@@ -72,6 +72,8 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     # Admin runs scheduled task to request originality report score.
     And I wait "20" seconds
     And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
+    And I wait "30" seconds
+    And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
     And I log out
     # Open the Cloud Viewer as instructor1.
     And I log in as "instructor1"
@@ -85,7 +87,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     Then I should see "testfile.txt"
     And I should see "student1 student1"
 
-  @javascript
+  @javascript @_file_upload
   Scenario: A student can submit a draft and it is not sent to Turnitin until it is submitted.
     Given I navigate to "Edit settings" in current page administration
     And I set the following fields to these values:
@@ -101,7 +103,6 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     And I upload "plagiarism/turnitinsim/tests/fixtures/testfile.txt" file to "File submissions" filemanager
     And I press "Save changes"
     Then I should see "Not graded"
-    And I should see "Not Sent"
     And I log out
     # Admin runs scheduled task to send submission to Turnitin.
     And I log in as "admin"
@@ -128,10 +129,12 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     And I run the scheduled task "plagiarism_turnitinsim\task\send_submissions"
     # Admin runs scheduled task to request an originality report.
     And I wait "10" seconds
-    And I run the scheduled task "plagiarism_turnitinsim\task\send_submissions"
+    And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
     # Admin runs scheduled task to request originality report score.
-    And I wait "20" seconds
-    And I run the scheduled task "plagiarism_turnitinsim\task\send_submissions"
+    And I wait "30" seconds
+    And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
+    And I wait "30" seconds
+    And I run the scheduled task "plagiarism_turnitinsim\task\get_reports"
     And I log out
     # Open the Cloud Viewer as instructor1.
     And I log in as "instructor1"
