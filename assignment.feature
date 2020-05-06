@@ -97,6 +97,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     Then I should see "%"
     And I click on ".or_score" "css_element"
     And I switch to "cvWindow" window
+    And I wait "10" seconds
     Then I should see "testfile.txt"
     And I should see "student1 student1"
 

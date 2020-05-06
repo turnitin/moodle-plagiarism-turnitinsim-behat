@@ -40,7 +40,7 @@ Feature: Plagiarism plugin works with a Moodle forum
       | Message | This is the body of the forum post that will be submitted to Turnitin. It will be sent to Turnitin for Originality Checking |
     And I press "Post to forum"
 
-  @javascript @_file_upload 
+  @javascript @_file_upload
   Scenario: Add a post to a discussion with a file attached and retrieve the originality score
     Given I log out
     # Student creates a forum discussion and replies to original post.
@@ -96,5 +96,6 @@ Feature: Plagiarism plugin works with a Moodle forum
     And I am on "Course 1" course homepage
     And I follow "Test forum"
     And I follow "Forum post 1"
+    And I wait "30" seconds
     ##### TO DO: fix the below assertion once  INT-14195 is fixed
     Then I should see "%"
