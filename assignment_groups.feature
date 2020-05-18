@@ -86,7 +86,7 @@ Feature: Group assignment submissions
     And I follow "Test assignment name"
     Then I should see "%"
     And I click on ".or_score" "css_element"
-    And I switch to "cvWindow" window
+    And I switch to viewer window
     And I click on "Accept" "button"
     Then I should see "testfile.txt"
     And I should see "student1 student1"

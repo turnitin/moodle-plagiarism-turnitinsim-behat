@@ -29,6 +29,12 @@ require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 class behat_plagiarism_turnitinsim extends behat_base {
 
     /**
+     * @var string used by {@link switch_to_window()} and
+     * {@link switch_to_the_main_window()} to work-around a Chrome browser issue.
+     */
+    const MAIN_WINDOW_NAME = '__moodle_behat_main_window_name';
+
+    /**
      * @Given I configure Turnitin Integrity credentials
      */
     public function i_configure_turnitinsim_credentials() {
@@ -52,6 +58,31 @@ class behat_plagiarism_turnitinsim extends behat_base {
             'firstname' => $username,
             'lastname' => $username
         ));
+    }
+
+    /**
+     * Switches to the specified window. Useful when interacting with popup windows.
+     *
+     * @Given /^I switch to viewer window$/
+     *
+     */
+    public function switch_to_viewer() {
+
+        $this->getSession()->executeScript(
+            'if (window.name == "") window.name = "' . self::MAIN_WINDOW_NAME . '"');
+        $windowNames = $this->getSession()->getWindowNames();
+        if(count($windowNames) > 1) {
+            $this->getSession()->switchToWindow($windowNames[1]);
+        }
+    }
+
+    /**
+     * Switches to the main Moodle window. Useful when you finish interacting with popup windows.
+     *
+     * @Given /^I switch back to the main window$/
+     */
+    public function switch_back_to_the_main_window() {
+        $this->getSession()->switchToWindow(self::MAIN_WINDOW_NAME);
     }
 
 }
