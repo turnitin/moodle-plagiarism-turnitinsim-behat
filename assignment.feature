@@ -85,7 +85,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     Then "student1 student1" row "File submissions" column of "generaltable" table should contain "%"
     And I click on ".or_score" "css_element"
     And I switch to viewer window
-    And I click on "Accept" "button"
+    And I click on "accept" "button"
     Then I should see "testfile.txt"
     And I should see "student1 student1"
     # Open the Cloud Viewer as student1.
