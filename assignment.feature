@@ -47,7 +47,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     And I press "Add submission"
-    And I click on "I accept the Turnitin EULA" "button"
+    And I click on "#pp-eula-accept" "css_element"
     And I upload "plagiarism/turnitinsim/tests/fixtures/testfile.txt" file to "File submissions" filemanager
     And I press "Save changes"
     Then I should see "Submitted for grading"
@@ -97,7 +97,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     Then I should see "%"
     And I click on ".or_score" "css_element"
     And I switch to viewer window
-    
+
 
   @javascript @_file_upload
   Scenario: A student can decline the EULA, their submission still processes in Moodle but is not sent to Turnitin
@@ -107,7 +107,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     And I press "Add submission"
-    And I click on "I decline the Turnitin EULA" "button"
+    And I click on "#pp-eula-decline" "css_element"
     Then I should see "Your submissions will not be sent to Turnitin as you have not accepted the Turnitin End User Licence Agreement."
     And I upload "plagiarism/turnitinsim/tests/fixtures/testfile.txt" file to "File submissions" filemanager
     And I press "Save changes"
