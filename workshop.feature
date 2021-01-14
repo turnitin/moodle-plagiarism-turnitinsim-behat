@@ -45,7 +45,7 @@ Feature: Plagiarism plugin works with a Moodle Workshop
     And I am on "Course 1" course homepage
     And I follow "Test workshop"
     And I press "Add submission"
-    And I click on "I accept the Turnitin EULA" "button"
+    And I click on "#pp-eula-accept" "css_element"
     And I set the following fields to these values:
       | Title              | Submission1                                                                                                                                            |
       | Submission content | This is a workshop submission that will be submitted to Turnitin. It will be sent to Turnitin for Originality Checking and matched against any sources |
