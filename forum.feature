@@ -55,7 +55,7 @@ Feature: Plagiarism plugin works with a Moodle forum
     And I reply "Forum post 1" post from "Test forum" forum with:
       | Subject    | Reply with attachment                                                                                                       |
       | Message    | This is the body of the forum reply that will be submitted to Turnitin. It will be sent to Turnitin for Originality Checking |
-      | Attachment | plagiarism/turnitinsim/tests/fixtures/testfile.txt
+      | Attachment | plagiarism/turnitinsim/tests/fixtures/testfile.txt                                                                           |
     And I click on "#pp-eula-accept" "css_element"
     And I press "Post to forum"
     And I wait "20" seconds
