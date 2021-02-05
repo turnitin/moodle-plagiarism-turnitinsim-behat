@@ -39,7 +39,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     And I follow "Test assignment name"
     Then I should see "Grading summary"
 
-  @javascript @_file_upload
+  @javascript @_file_upload @_switch_window
   Scenario: A student can accept the EULA and submit to Turnitin, an Originality Report is retrieved and the Cloud Viewer can be launched.
     Given I log out
     # Student submits.
