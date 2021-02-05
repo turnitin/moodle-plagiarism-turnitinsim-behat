@@ -90,6 +90,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     And I should see "student1 student1"
     # Open the Cloud Viewer as student1.
     And I switch back to the main window
+    And I wait "20" seconds
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
