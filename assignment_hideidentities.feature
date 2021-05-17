@@ -46,7 +46,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     And I am on "Course 1" course homepage
     And I follow "Test assignment name"
     And I press "Add submission"
-    And I click on "#pp-eula-accept" "css_element"
+    And I click on "#turnitinsim_eula_accept" "css_element"
     And I upload "plagiarism/turnitinsim/tests/fixtures/testfile.txt" file to "File submissions" filemanager
     And I press "Save changes"
     Then I should see "Submitted for grading"
