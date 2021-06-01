@@ -74,7 +74,7 @@ Feature: Plagiarism plugin works with a Moodle Assignment
     And I follow "Test assignment name"
     When I navigate to "View all submissions" in current page administration
     Then "student1 student1" row "File submissions" column of "generaltable" table should contain "%"
-    And I click on ".or_score" "css_element"
+    And I click on ".turnitinsim_or_score" "css_element"
     And I switch to viewer window
     And I click on "Accept" "button"
     Then I should see "testfile.txt"
